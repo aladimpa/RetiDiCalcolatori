@@ -240,19 +240,14 @@ void *handle_connection(void *arg) {
             for (;;) {
                 // Get the next direntry
                 direntry = readdir(files_dir);
-                if (direntry == NULL) {
-                  break;
-                }
+                if (direntry == NULL)
+                    break;
                 // Check if file is ok
                 if (strlen(direntry->d_name) == 1 && direntry->d_name[0] == '.')
                     continue;
                 if (strlen(direntry->d_name) == 2 && direntry->d_name[0] == '.' && direntry->d_name[1] == '.')
                     continue;
                 files_count++;
-            }
-            if (files_count == 0) {
-              const char msg[] = "Cartella\n";
-                  send(conn->fd, &msg, sizeof(msg), 0);
             }
             dprintf(conn->fd , "FILES COUNT %d\n", files_count);
             // Restore cursor
